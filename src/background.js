@@ -1,7 +1,5 @@
 import { getLoginPage, getMagic, doLogin } from './wifiLogin';
 
-const username = "your-username";
-const password = "your-password";
 const MAX_RETRIES = 5;
 let retryCount = 0;
 let isAuthorized = false;  // Track whether the user is logged in
@@ -20,9 +18,19 @@ function showNotification(message) {
 // Function to check the login and execute the login process with retries
 async function checkAndLogin() {
   try {
+    const data = await new Promise((resolve, reject) => {
+        chrome.storage.sync.get(['username', 'password'], (result) => {
+            if (chrome.runtime.lastError) {
+                return reject(chrome.runtime.lastError);
+            }
+            resolve(result);
+        });
+    });
+    const username = data.username;
+    const password = data.password;
     const loginPageUrl = await getLoginPage();
     const magicToken = await getMagic(loginPageUrl);
-    const { logoutUrl, keepAliveUrl } = await doLogin(username, password, magicToken);
+    await doLogin(username, password, magicToken);
 
     console.log("Login successful");
     showNotification("Logged in successfully");
