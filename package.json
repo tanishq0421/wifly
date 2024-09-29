@@ -1,0 +1,14 @@
+{
+    "name": "wifi-auto-login-extension",
+    "author": "logicbee",
+    "version": "1.0.0",
+    "description": "A Chrome extension for automatic WiFi login.",
+    "main": "src/background.js",
+    "scripts": {
+      "test": "jest"
+    },
+    "devDependencies": {
+      "jest": "^27.0.0"
+    }
+  }
+  
