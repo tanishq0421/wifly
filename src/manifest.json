@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Auto WiFi Login",
+    "version": "1.2",
+    "description": "Automatically login to WiFi when authorization is required or network disconnects.",
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": [
+      "alarms",
+      "notifications",
+      "storage",
+      "identity",
+      "scripting",
+      "networkState"
+    ],
+    "icons": {
+      "48": "icons/icon.png"
+    },
+    "host_permissions": [
+      "http://192.168.249.1/*"
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "48": "icons/icon.png"
+      }
+    }
+  }
+  
