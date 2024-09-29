@@ -35,13 +35,21 @@ async function checkAndLogin() {
 
     if (retryCount < MAX_RETRIES) {
       console.log(`Retrying login... (${retryCount}/${MAX_RETRIES})`);
-      checkAndLogin();
+      await checkAndLogin(); // Add await here to ensure proper retry logic
     } else {
       showNotification("Auto-login failed after multiple attempts");
-      chrome.action.openPopup();  // Open manual login popup
+      openManualLoginPopup();  // Open manual login popup or redirect
       isAuthorized = false;
     }
   }
+}
+
+// Function to open manual login popup
+function openManualLoginPopup() {
+  const loginPageUrl = `${firewallUrl}/login`; // URL of the original login page
+  chrome.tabs.create({ url: loginPageUrl }); // Open the login page in a new tab
+  // Alternatively, you can create a popup window if desired:
+  // chrome.windows.create({ url: loginPageUrl, type: 'popup', width: 600, height: 400 });
 }
 
 // Monitor network status changes
@@ -68,7 +76,7 @@ function monitorAuthorization() {
       const response = await fetch(firewallUrl + '/logout?', { method: 'GET' });
       const text = await response.text();
 
-      if (text.includes("authorization required")) {
+      if (text.includes("Requires Authorization")) {
         console.log("Authorization needed, attempting login...");
         checkAndLogin();  // Auto-login if authorization required
       }
