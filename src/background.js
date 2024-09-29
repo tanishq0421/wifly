@@ -48,9 +48,7 @@ async function checkAndLogin() {
 function openManualLoginPopup() {
   const loginPageUrl = `${firewallUrl}/login`; // URL of the original login page
   chrome.tabs.create({ url: loginPageUrl }); // Open the login page in a new tab
-  // Alternatively, you can create a popup window if desired:
-  // chrome.windows.create({ url: loginPageUrl, type: 'popup', width: 600, height: 400 });
-}
+ }
 
 // Monitor network status changes
 function monitorNetworkStatus() {

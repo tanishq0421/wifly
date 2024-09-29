@@ -1,4 +1,4 @@
-import { firewallUrl, getLoginPage, getMagic, doLogin } from '../src/wifiLogin';
+import { firewallUrl, getLoginPage, getMagic, doLogin } from '../src/wifiLogin.js';
 
 global.fetch = jest.fn();
 
